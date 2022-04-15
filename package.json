@@ -1,0 +1,11 @@
+{
+  "name": "coderhouse-js",
+  "version": "1.0.0",
+  "description": "Curso de javascript en Coderhouse, ejercicios y proyecto",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "chuelmo@gmail.com",
+  "license": "ISC"
+}

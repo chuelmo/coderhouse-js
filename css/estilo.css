@@ -3,3 +3,18 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+body {
+    background: #ffe259;
+    background: linear-gradient(to right, #ffa751, #ffe259);
+}
+
+.fondo {
+    background-image: url(../images/fondo.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+#errores {
+    color: red;
+}

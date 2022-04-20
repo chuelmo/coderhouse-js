@@ -23,139 +23,20 @@
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
           <img src="./images/logo.png" alt="logo" width="30" />
-          Ejercicios de Javascript
+          Ejercicios de Javascript - Simulador
         </a>
       </div>
     </header>
     <main class="flex-shrink-0">
-      <div class="container w-75 bg-primary mt-5 rounded shadow" id="login">
-        <div class="row align-items-strech">
-          <div
-            class="col fondo d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded"
-          ></div>
-          <div class="col bg-white p-5 rounded-end">
-            <div class="text-end">
-              <img src="./images/logo.png" width="48" alt="" />
-            </div>
-            <h2 class="fw-bold text-center py-5">Bienvenido</h2>
-            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-              <div
-                id="liveToast"
-                class="toast hide"
-                role="alert"
-                aria-live="assertive"
-                aria-atomic="true"
-              >
-                <div class="toast-header">
-                  <img
-                    src="./images/logo.png"
-                    class="rounded me-2"
-                    alt="logo"
-                    width="30"
-                  />
-                  <strong class="me-auto">Login incorrecto</strong>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="toast"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="toast-body">
-                  Mmhhh, no encontramos esta combinación de email y contraseña.
-                </div>
-              </div>
-            </div>
-            <div>
-              <div class="mb-4">
-                <label for="email" class="form-label">Correo electrónico</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  name="email"
-                  id="email"
-                />
-              </div>
-              <div class="mb-4">
-                <label for="password" class="form-label">Contraseña</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  name="password"
-                  id="password"
-                />
-              </div>
-              <div class="mb-4 form-check">
-                <input
-                  type="checkbox"
-                  name="conectado"
-                  class="form-check-input"
-                />
-                <label for="conectado" class="form-check-label"
-                  >Mantenerme conectado</label
-                >
-              </div>
-              <div class="d-grid">
-                <button class="btn btn-primary" id="btnLogin">
-                  Iniciar sesión
-                </button>
-              </div>
-            </div>
-          </div>
+      <div class="container w-75 bg-white mt-5 rounded shadow">
+        <div class="row text-center">
+          <h1>Simulador Interactivo</h1>
         </div>
-      </div>
-      <div
-        class="container w-75 bg-white mt-5 rounded shadow d-none"
-        id="ejercicio"
-      >
-        <h2>Hola admin@test.com, gusto volver a verte por aquí.</h2>
-        <h4>
-          Vamos a calcular la potencia de un número usando solo multiplicaciones
-        </h4>
-        <div>
-          <div class="mb-4">
-            <label for="base" class="form-label">Base</label>
-            <input type="number" class="form-control" name="base" id="base" />
-          </div>
-          <div class="mb-4">
-            <label for="exponente" class="form-label">Exponente</label>
-            <input
-              type="number"
-              class="form-control"
-              name="exponente"
-              id="exponente"
-            />
-          </div>
-          <div class="mb-4">
-            <label for="resultado" class="form-label">Resultado</label>
-            <input
-              type="text"
-              class="form-control"
-              name="resultado"
-              id="resultado"
-              readonly
-            />
-          </div>
-          <div class="mb-4">
-            <label for="errores" class="form-label">Errores</label>
-            <input
-              type="text"
-              class="form-control"
-              name="errores"
-              id="errores"
-              readonly
-            />
-          </div>
-          <div class="d-grid">
-            <button class="btn btn-primary mb-4" id="btnCalcular">
-              Calcular
-            </button>
-          </div>
-          <div class="d-grid">
-            <button class="btn btn-secondary mb-4" id="btnLimpiar">
-              Limpiar campos
-            </button>
-          </div>
+        <div class="row text-center">
+          <img
+            src="./images/desafio_simulador_01.png"
+            alt="Consigna del desafío"
+          />
         </div>
       </div>
     </main>
@@ -166,7 +47,7 @@
         >
       </div>
     </footer>
-    <script src="./js/logica.js"></script>
+    <script src="./js/simulador01.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"

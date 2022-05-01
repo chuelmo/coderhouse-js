@@ -1,3 +1,8 @@
+# Primer entrega del proyecto
+
+- Agregué a los artículos la categoría, la idea es más adelante mostrar sólo los artículos de la categoría seleccionada.
+- Trabajé sobre la estructura HTML para tener una idea más aproximada de como se verá la página
+
 # Trabajo con Arrays y Clases
 
 - Trasladar al proyecto integrador el concepto de objetos y clases

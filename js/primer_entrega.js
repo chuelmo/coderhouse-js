@@ -1,9 +1,24 @@
+class Categoria {
+    constructor(id, nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+
+    getId() {
+        return this.id;
+    }
+
+    getNombre() {
+        return this.nombre;
+    }
+}
+
 class Articulo {
-    constructor(id, nombre, precio) {
+    constructor(id, nombre, precio, categoria) {
         this.id = id;
         this.nombre = nombre.toUpperCase();
         this.precio = precio;
-        this.categoria = 0;
+        this.categoria = categoria;
     }
 
     getNombre() {
@@ -18,6 +33,10 @@ class Articulo {
         return this.id;
     }
 
+    getCategoria() {
+        return this.categoria;
+    }
+
     toString() {
         return "Nombre: " + this.nombre + " Precio: " + this.precio.toFixed(2);
     }
@@ -25,11 +44,31 @@ class Articulo {
 
 class DataBase {
     constructor() {
+        this.categoria = [];
+        this.categoria.push(new Categoria(1, "COMPUTADORAS"));
+        this.categoria.push(new Categoria(2, "NOTEBOOKS"));
+        this.categoria.push(new Categoria(3, "MONITORES"));
+        this.categoria.push(new Categoria(4, "CELULARES"));
         this.articulos = [];
-        this.articulos.push(new Articulo(1, "MOUSE", 5));
-        this.articulos.push(new Articulo(2, "TECLADO", 10));
-        this.articulos.push(new Articulo(3, "MONITOR", 120));
-        this.articulos.push(new Articulo(4, "AURICULARES", 20));
+        this.articulos.push(new Articulo(1, "PC DELL", 455, this.categoria[0]));
+        this.articulos.push(new Articulo(2, "PC HP", 535, this.categoria[0]));
+        this.articulos.push(new Articulo(3, "PC LENOVO", 799, this.categoria[0]));
+        this.articulos.push(new Articulo(4, "PC FUJITSU", 230, this.categoria[0]));
+
+        this.articulos.push(new Articulo(5, "DELL 780", 780, this.categoria[1]));
+        this.articulos.push(new Articulo(6, "TOSHIBA SATELITE", 650, this.categoria[1]));
+        this.articulos.push(new Articulo(7, "HP ELITEBOOK", 560, this.categoria[1]));
+        this.articulos.push(new Articulo(8, "ACER ONE", 750, this.categoria[1]));
+
+        this.articulos.push(new Articulo(9, "VIEWSONIC 22", 275, this.categoria[2]));
+        this.articulos.push(new Articulo(10, "AOC 19", 385, this.categoria[2]));
+        this.articulos.push(new Articulo(11, "SAMSUNG 14", 150, this.categoria[2]));
+        this.articulos.push(new Articulo(12, "VIEWSONIC 43", 500, this.categoria[2]));
+
+        this.articulos.push(new Articulo(13, "IPHONE 10", 590, this.categoria[3]));
+        this.articulos.push(new Articulo(14, "SAMSUNG", 700, this.categoria[3]));
+        this.articulos.push(new Articulo(15, "CAT X12", 450, this.categoria[3]));
+        this.articulos.push(new Articulo(16, "XIAOMI X45", 280, this.categoria[3]));
     }
 
     getArticulo(id) {
@@ -41,39 +80,86 @@ class DataBase {
         return null;
     }
 
-    addArticulo(articulo) {
-        this.articulos.push(articulo);
+    getCategoria(id) {
+        for (const cat of this.categoria) {
+            if (cat.getId() === id) {
+                return cat;
+            }
+        }
+        return null;
     }
 
-    showAllArticulos() {
+    showAllArticulosByCategoria(categoria) {
         let msg = '';
         for (const articulo of this.articulos) {
-            msg = msg + articulo.getId() + ' - ' + articulo.getNombre() + '\n';
+            if (articulo.getCategoria().getId() === categoria.getId()) {
+                msg = msg + articulo.getId() + ' - ' + articulo.getNombre() + '\n';
+            }
         }
         return msg;
     }
 
-    getCantidadArticulos() {
-        return this.articulos.length;
+    showAllCategorias() {
+        let msg = '';
+        for (const cat of this.categoria) {
+            msg = msg + cat.getId() + ' - ' + cat.getNombre() + '\n';
+        }
+        return msg;
+    }
+
+    getCategoriasAllIds() {
+        let catIds = [];
+        for (const cat of this.categoria) {
+            catIds.push(cat.getId());
+        }
+        return catIds;
+    }
+
+    getArticulosAllIdsByCategoria(categoria) {
+        let artIds = [];
+        for (const art of this.articulos) {
+            if (art.getCategoria().getId() === categoria.getId()) {
+                artIds.push(art.getId());
+            }
+        }
+        return artIds;
     }
 }
 
-function armarMenu(db) {
-    let msg = 'Artículos disponibles\n\n';
-    msg = msg + db.showAllArticulos();
+function armarMenuCategoria(db) {
+    let msg = 'Categorías disponibles\n\n';
+    msg = msg + db.showAllCategorias();
     msg = msg + '\n0 - SALIR';
-    msg = msg + '\n Ingrese el número del producto deseado';
+    msg = msg + '\n Ingrese el número de la categoría deseada';
     return msg;
 }
 
-function pedirAndValidarOpcion(db) {
+function armarMenuArticulos(db, categoria) {
+    let msg = 'Artículos disponibles\n\n';
+    msg = msg + db.showAllArticulosByCategoria(categoria);
+    msg = msg + '\n0 - SALIR';
+    msg = msg + '\n Ingrese el número del artículo deseado';
+    return msg;
+}
+
+function pedirAndValidarOpcion(db, categoria) {
+    let opcionesValidas;
+    let menu;
+    if (categoria === null) {
+        opcionesValidas = db.getCategoriasAllIds();
+        menu = armarMenuCategoria(db);
+    } else {
+        opcionesValidas = db.getArticulosAllIdsByCategoria(categoria);
+        menu = armarMenuArticulos(db, categoria);
+    }
+    opcionesValidas.push(0);
     let opcion;
     do {
         error = false;
-        opcion = parseInt(prompt(armarMenu(db)));
+        opcion = parseInt(prompt(menu));
         if (isNaN(opcion)) {
             error = true;
-        } else if (opcion < 0 || opcion > db.getCantidadArticulos()) {
+        } else if (!opcionesValidas.includes(opcion)) {
             error = true;
         }
     } while(error);
@@ -140,16 +226,18 @@ function showFactura(db, compras, cuotas) {
 }
 
 // Programa principal
-const db = new DataBase(); //El objeto tiene un array de artículos
-const mic = new Articulo(db.getCantidadArticulos() + 1, "Microfono", 16); //Creo un artículo cualquiera
-db.addArticulo(mic); //lo agrego a la "base de datos" que ya tiene artículos
+const db = new DataBase();
 
-let opcion = pedirAndValidarOpcion(db);
+let opcion = pedirAndValidarOpcion(db, null);
 let compras = new Map() //En vez de Array utilizo Map para almacenar las compras
 while (opcion != 0) {
-    addCompra(compras, opcion);
+    opcionArticulo = pedirAndValidarOpcion(db, db.getCategoria(opcion));
+    if (opcionArticulo === 0) {
+        break;
+    }
+    addCompra(compras, opcionArticulo);
     alert(showCompras(db, compras, 'Estos artículos son los que tiene en su carrito'));
-    opcion = pedirAndValidarOpcion(db);
+    opcion = pedirAndValidarOpcion(db, null);
 }
 if (compras.size === 0) {
     alert("Vaya! No has comprado nada, esperamos volver a verte pronto!");

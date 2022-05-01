@@ -1,7 +1,9 @@
 # Primer entrega del proyecto
 
-- Agregué a los artículos la categoría, la idea es más adelante mostrar sólo los artículos de la categoría seleccionada.
+- Agregué a los artículos la categoría, la idea es mostrar sólo los artículos de la categoría seleccionada.
 - Trabajé sobre la estructura HTML para tener una idea más aproximada de como se verá la página
+- Agregué las imágenes de todos los productos que la página va a tener disponibles.
+- Hice algunos pequeños cambios en el archivo js para que contemple el uso de la categoría
 
 # Trabajo con Arrays y Clases
 

@@ -1,3 +1,14 @@
+# Desafío complementario
+
+## Interactuar con el HTML
+
+- Dejé el ejercicio anterior para que corra a través de un botón.
+- Se despliegan los artículos según la categoría de manera dinámica, modificando el DOM.
+- Se crea un template donde se muestra cada uno de los artículos, este template se modifica dinámicamente.
+- Se mantiene la anterior DataBase como MockDataBase para que funcione el ejercicio anterior
+- Se crea una nueva DataBase con todos los artículos con los que trabajaré en el proyecto
+- Se agregan campos en la clase Artículos para guardar la url de la imagen, la descripción del producto y el atributo alt de la imagen.
+
 # Primer entrega del proyecto
 
 - Agregué a los artículos la categoría, la idea es mostrar sólo los artículos de la categoría seleccionada.

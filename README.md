@@ -1,3 +1,10 @@
+# Desafío incorporar eventos
+
+- Eliminé por completo la primer parte de los ejercicios donde trabajamos con prompt y alert.
+- Agruegué manejo de eventos para cargar la colección (Map) de Compras.
+- Muestro el carrito con todas las compras, se arma dinámicamente.
+- Se siguen manteniendo en gitHub cada desafío como una rama independiente.
+
 # Desafío complementario
 
 ## Interactuar con el HTML

@@ -1,3 +1,11 @@
+# Segunda entrega del proyecto
+
+- Eliminé el Map donde guardaba las compras para pasar a utilizar el localStorage.
+- En el carrito agregué el botón "Vaciar Carrito" que deja el carrito vacío.
+- En el carrito le agregué funcionalidad a los botoncitos de aumentar y disminuir la cantidad comprada de un producto.
+- Si la cantidad llega a 0 todavía no se elimina el producto del carrito, se hará para una próxima versión.
+- Se usa localStorage, JSON.stringify y JSON.parse tal cual se pide en la rúbrica.
+
 # Desafío incorporar eventos
 
 - Eliminé por completo la primer parte de los ejercicios donde trabajamos con prompt y alert.

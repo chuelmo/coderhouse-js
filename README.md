@@ -1,3 +1,9 @@
+# Optimizando el código
+
+- Se refactoriza el código, no hay funciones de más de 15 líneas
+- Cada clase va en un archivo js separado, database, categoria, articulo, compra
+- Se utiliza el operador ternario para darle claridad al código
+
 # Segunda entrega del proyecto
 
 - Eliminé el Map donde guardaba las compras para pasar a utilizar el localStorage.

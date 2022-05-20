@@ -193,6 +193,11 @@ function removeOneProduct(idCoderHouse) {
             contenedorDeProductos.innerHTML = "";
             contenedorTablaCarrito.innerHTML = "";
             showCarritoVacio();
+        } else {
+            contenedorDeProductos.innerHTML = "";
+            contenedorTablaCarrito.innerHTML = "";
+            showCarrito(db);
+            addFunctionalityCarritoButtons();
         }
     } else {
         compra.setCantidad(cantidad.toString());

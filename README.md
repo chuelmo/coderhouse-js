@@ -2,7 +2,9 @@
 
 - Se refactoriza el código, no hay funciones de más de 15 líneas
 - Cada clase va en un archivo js separado, database, categoria, articulo, compra
-- Se utiliza el operador ternario para darle claridad al código
+- Se utiliza el operador ternario donde se puede para darle claridad al código
+- Al disminuir la cantidad de un artículo hasta 0 se elimina la línea de la tabla del carrito
+- Fix a bug que aparecía cuando se vaciaba el carrito y se le trataba de dar funcionalidad a un botón inexistente.
 
 # Segunda entrega del proyecto
 

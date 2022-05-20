@@ -186,15 +186,22 @@ function removeOneProduct(idCoderHouse) {
     let compraParse = JSON.parse(localStorage.getItem(idCoderHouse));
     let compra = new Compra(compraParse.id, compraParse.cantidad);
     let cantidad = parseInt(compra.getCantidad()) - 1;
-    if (cantidad < 0) {
-        cantidad = 0;
+    if (cantidad <= 0) {
+        localStorage.removeItem(idCoderHouse);
+        if (localStorage.length === 1) { //El carrito se vació
+            localStorage.removeItem(CLAVE_LOCALSTORAGE);
+            contenedorDeProductos.innerHTML = "";
+            contenedorTablaCarrito.innerHTML = "";
+            showCarritoVacio();
+        }
+    } else {
+        compra.setCantidad(cantidad.toString());
+        localStorage.setItem(idCoderHouse, JSON.stringify(compra));
+        contenedorDeProductos.innerHTML = "";
+        contenedorTablaCarrito.innerHTML = "";
+        showCarrito(db);
+        addFunctionalityCarritoButtons();
     }
-    compra.setCantidad(cantidad.toString());
-    localStorage.setItem(idCoderHouse, JSON.stringify(compra));
-    contenedorDeProductos.innerHTML = "";
-    contenedorTablaCarrito.innerHTML = "";
-    showCarrito(db);
-    addFunctionalityCarritoButtons();
 }
 
 // Esta función dejó de utilizar un Map para guardar las compras
@@ -262,6 +269,10 @@ document.getElementById('Notebooks').addEventListener('click', (e) => {
 document.getElementById('Carrito').addEventListener('click', (e) => {
     contenedorDeProductos.innerHTML = "";
     contenedorTablaCarrito.innerHTML = "";
-    showCarrito(db);
-    addFunctionalityCarritoButtons();
+    if (localStorage.getItem(CLAVE_LOCALSTORAGE) === null) {
+        showCarritoVacio();
+    } else {
+        showCarrito(db);
+        addFunctionalityCarritoButtons();
+    }
 });

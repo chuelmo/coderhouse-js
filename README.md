@@ -1,3 +1,8 @@
+# Agregando librerías
+
+- Se agrega el uso de la librería SweetAlert para cumplir con la consigna
+- Su uso se acopla perfectamente al funcionamiento del carrito, al momento de intentar vaciar el carrito se despliega un alert que te informa que tu carrito quedará vacío, según la elección del usuario el carrito se vaciará o quedará tal cual.
+
 # Optimizando el código
 
 - Se refactoriza el código, no hay funciones de más de 15 líneas

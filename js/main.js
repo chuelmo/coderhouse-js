@@ -257,7 +257,7 @@ function addCompra(id) {
 //Además pone a correr la app
 async function cargarDBandRunApp() {
     try {
-        const res = await fetch('/js/db.json');
+        const res = await fetch('./js/db.json');
         const datos = await res.json();
         datos.forEach((article) => {
             let a = new Articulo(article.id, article.nombre, article.precio, db.getCategoriaById(article.categoria), article.descripcion, article.imagen, article.alt);

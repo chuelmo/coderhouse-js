@@ -1,3 +1,9 @@
+# Utilizando Fetch en el proyecto
+
+- Se agrega el uso de fetch al proyecto, los artículos se cargan desde un archivo db.json
+- Se llama a una función runApp() luego de que se cargan los productos
+- Se modifica la clase database, se eliminan los productos "hardcodeados" en ella y se agrega un método para cargarlos.
+
 # Agregando librerías
 
 - Se agrega el uso de la librería SweetAlert para cumplir con la consigna

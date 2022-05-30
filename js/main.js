@@ -1,3 +1,5 @@
+import {Spinner} from './spin.js';
+
 // toma del html el template que hice con la tarjeta de cada artículo
 // la completa con los datos sacados de la clase DataBase según
 // cada categoría y agrega la tarjeta al DOM para que se vea.
@@ -263,44 +265,69 @@ async function cargarDBandRunApp() {
             let a = new Articulo(article.id, article.nombre, article.precio, db.getCategoriaById(article.categoria), article.descripcion, article.imagen, article.alt);
             db.addArticulo(a);
         });
-        runApp();
+        setTimeout(runApp, 1600);
     } catch (e) {
         console.log(`ERROR: ${e.message}`);
     }
 }
 
+function showMonitores() {
+    contenedorDeProductos.innerHTML = "";
+    contenedorTablaCarrito.innerHTML = "";
+    showArticulos("MONITORES");
+    addFunctionalityToButtons();
+    spinner.spin(false);
+}
+
+function showComputadoras() {
+    contenedorDeProductos.innerHTML = "";
+    contenedorTablaCarrito.innerHTML = "";
+    showArticulos("COMPUTADORAS");
+    addFunctionalityToButtons();
+    spinner.spin(false);
+}
+
+function showCelulares() {
+    contenedorDeProductos.innerHTML = "";
+    contenedorTablaCarrito.innerHTML = "";
+    showArticulos("CELULARES");
+    addFunctionalityToButtons();
+    spinner.spin(false);
+}
+
+function showNotebooks() {
+    contenedorDeProductos.innerHTML = "";
+    contenedorTablaCarrito.innerHTML = "";
+    showArticulos("NOTEBOOKS");
+    addFunctionalityToButtons();
+    spinner.spin(false);
+}
+
 function runApp() {
     showArticulos("COMPUTADORAS"); // cuando se carga la página se muestran por defecto todos los artículos de la categoría COMPUTADORAS
+    spinner.spin(false);
     addFunctionalityToButtons();
 
     // Se manipula el DOM para que dependiendo en que categoría se haga click se muestren
     // solo los artículos pertenecientes a esa Categoría
     document.getElementById('Computadoras').addEventListener('click', (e) => {
-        contenedorDeProductos.innerHTML = "";
-        contenedorTablaCarrito.innerHTML = "";
-        showArticulos("COMPUTADORAS");
-        addFunctionalityToButtons();
+        spinner.spin(contenedorDeProductos);
+        setTimeout(showComputadoras, 1200);
     })
 
     document.getElementById('Monitores').addEventListener('click', (e) => {
-        contenedorDeProductos.innerHTML = "";
-        contenedorTablaCarrito.innerHTML = "";
-        showArticulos("MONITORES");
-        addFunctionalityToButtons();
+        spinner.spin(contenedorDeProductos);
+        setTimeout(showMonitores, 1200);
     });
 
     document.getElementById('Celulares').addEventListener('click', (e) => {
-        contenedorDeProductos.innerHTML = "";
-        contenedorTablaCarrito.innerHTML = "";
-        showArticulos("CELULARES");
-        addFunctionalityToButtons();
+        spinner.spin(contenedorDeProductos);
+        setTimeout(showCelulares, 1200);
     });
 
     document.getElementById('Notebooks').addEventListener('click', (e) => {
-        contenedorDeProductos.innerHTML = "";
-        contenedorTablaCarrito.innerHTML = "";
-        showArticulos("NOTEBOOKS");
-        addFunctionalityToButtons();
+        spinner.spin(contenedorDeProductos);
+        setTimeout(showNotebooks, 1200);
     });
 
     //Muestra el carrito de compras
@@ -322,6 +349,31 @@ function runApp() {
 const CLAVE_LOCALSTORAGE = "CursoJS_CoderHouse"; //clave para identificar si el carrito está vacío
 const contenedorDeProductos = document.getElementById('todosLosProductos'); //div que contendrá todos los productos
 const contenedorTablaCarrito = document.getElementById('tablaCarrito'); //div que contendrá el carrito de compra
+const optsSpin = {
+    lines: 13 // The number of lines to draw
+  , length: 28 // The length of each line
+  , width: 14 // The line thickness
+  , radius: 42 // The radius of the inner circle
+  , scale: 1 // Scales overall size of the spinner
+  , corners: 1 // Corner roundness (0..1)
+  , color: '#000' // #rgb or #rrggbb or array of colors
+  , opacity: 0.25 // Opacity of the lines
+  , rotate: 0 // The rotation offset
+  , direction: 1 // 1: clockwise, -1: counterclockwise
+  , speed: 1 // Rounds per second
+  , trail: 60 // Afterglow percentage
+  , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+  , zIndex: 2e9 // The z-index (defaults to 2000000000)
+  , className: 'spinner' // The CSS class to assign to the spinner
+  , top: '50%' // Top position relative to parent
+  , left: '50%' // Left position relative to parent
+  , shadow: false // Whether to render a shadow
+  , hwaccel: false // Whether to use hardware acceleration
+  , position: 'absolute' // Element positioning
+}
+const spinner = new Spinner(optsSpin);
+spinner.spin(contenedorDeProductos);
+
 const db = new DataBase();
 cargarDBandRunApp();  //Se cargan todos los artículos desde un archivo json y se corre la app
 

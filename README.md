@@ -1,3 +1,10 @@
+# Entrega final del proyecto
+
+- Se agrega un spinner para dar la sensación de que los productos se están cargando.
+- El código del spinner se tomó de: https://spin.js.org/ la misma página tiene un banner que dice "Fork me"
+- Para que el spinner se visualize utilizamos código asíncrono a través de la función setTimeout
+- voy a implementar pagos ficticios a través de paypal https://studentplace98.blogspot.com/2019/05/como-integrar-paypal-en-tu-pagina-web.html
+
 # Utilizando Fetch en el proyecto
 
 - Se agrega el uso de fetch al proyecto, los artículos se cargan desde un archivo db.json

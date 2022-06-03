@@ -4,8 +4,8 @@
 - El código del spinner se tomó de: https://spin.js.org/ la misma página tiene un banner que dice "Fork me"
 - Para que el spinner se visualize utilizamos código asíncrono a través de la función setTimeout
 - Se implementa pasarela de pagos con paypal, con el siguiente usuario se puede pagar.
-  -- user: sb-r32qq15281652@personal.example.com
-  -- password: bi3I\*kJ4
+  - user: sb-r32qq15281652@personal.example.com
+  - password: bi3I\*kJ4
 - Se cambia la lógica para vaciar el localStorage porque pueden haber claves de otras apps.
 
 # Utilizando Fetch en el proyecto

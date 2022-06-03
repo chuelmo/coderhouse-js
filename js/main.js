@@ -78,7 +78,7 @@ function showLineasCarrito(cloneTabla) {
     let total = 0;
     for (let i = 0; i < localStorage.length; i++) {
         let key = localStorage.key(i);
-        if (key !== CLAVE_LOCALSTORAGE) { //es el valor que uso para saber si el carrito está vacío, lo desestimo aquí.
+        if (key.includes("CoderHouse")) { //Si no tiene la palabra CoderHouse no es una clave de la App
             let id = parseInt(key.substring(10)); //le saco la palabra CoderHouse a la clave para obtener el id.
             let articulo = db.getArticulo(id);
             let compraParse = JSON.parse(localStorage.getItem(key));
@@ -90,6 +90,7 @@ function showLineasCarrito(cloneTabla) {
             cloneTabla.querySelector('tbody').appendChild(fila.content);
         }
     }
+    totalForPayPal = total * 1.21;
     return total;
 }
 
@@ -151,6 +152,18 @@ function addFunctionalityMinusButtons() {
     });
 }
 
+function clearLocalStorage() {
+    let i = 0;
+    while (i < localStorage.length) {
+        let key = localStorage.key(i);
+        if (key.includes("Coder")) { //Si no tiene la palabra Coder no es una clave de la App
+            localStorage.removeItem(key);
+        } else {
+            i++; //muevo el índice porque la clave encontrada no es de mi App
+        }
+    }
+}
+
 function emptyShoppingCart() {
     swal({
         title: "¿Estás seguro que deseas vaciar el carrito de compras?",
@@ -161,7 +174,7 @@ function emptyShoppingCart() {
       })
       .then((willDelete) => {
         if (willDelete) {
-            localStorage.clear();
+            clearLocalStorage();
             contenedorDeProductos.innerHTML = "";
             contenedorTablaCarrito.innerHTML = "";
             showCarritoVacio();
@@ -181,6 +194,33 @@ function addFunctionalityVaciarButton() {
     });
 }
 
+function addFunctionalityToPayPalButton() {
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: totalForPayPal
+              }
+            }]
+          });
+        },
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+            clearLocalStorage();
+            contenedorDeProductos.innerHTML = "";
+            contenedorTablaCarrito.innerHTML = "";
+            showCarritoVacio();
+            swal({
+                title: "¡Felicitaciones!",
+                text: `Gracias ${details.payer.name.given_name} su pago ha sido procesado`,
+                icon: "success",
+              });
+          });
+        }
+      }).render('#paypal-button-container');
+}
+
 //Le agrega el manejo del evento 'click' a los botones del carrito
 //Son 3 tipos de botones, el de incrementar la cantidad de un producto
 //el de decrementar y el botón de vaciar el carrito.
@@ -188,11 +228,13 @@ function addFunctionalityCarritoButtons() {
     addFunctionalityAddButtons();
     addFunctionalityMinusButtons();
     addFunctionalityVaciarButton();
+    addFunctionalityToPayPalButton();
 }
 
 // Se incrementa la cantidad de un producto comprado al hacer click en el botón 
 // aumentar (representado por una flechita para arriba)
 function addOneProductMore(idCoderHouse) {
+    addItemToLocalStorage();
     let compraParse = JSON.parse(localStorage.getItem(idCoderHouse));
     let compra = new Compra(compraParse.id, compraParse.cantidad);
     let cantidad = parseInt(compra.getCantidad()) + 1;
@@ -205,13 +247,13 @@ function addOneProductMore(idCoderHouse) {
 }
 
 function removeOneProduct(idCoderHouse) {
+    removeItemFromLocalStorage();
     let compraParse = JSON.parse(localStorage.getItem(idCoderHouse));
     let compra = new Compra(compraParse.id, compraParse.cantidad);
     let cantidad = parseInt(compra.getCantidad()) - 1;
     if (cantidad <= 0) {
         localStorage.removeItem(idCoderHouse);
-        if (localStorage.length === 1) { //El carrito se vació
-            localStorage.removeItem(CLAVE_LOCALSTORAGE);
+        if (localStorage.getItem(CLAVE_LOCALSTORAGE) === null) { //El carrito se vació
             contenedorDeProductos.innerHTML = "";
             contenedorTablaCarrito.innerHTML = "";
             showCarritoVacio();
@@ -231,12 +273,38 @@ function removeOneProduct(idCoderHouse) {
     }
 }
 
+//Cada vez que se agrega un artículo al localStorage
+//se incrementa la cantidad de artículos almacenados
+function addItemToLocalStorage() {
+    let cantidad = localStorage.getItem(CLAVE_LOCALSTORAGE);
+    if (cantidad === null) {
+        localStorage.setItem(CLAVE_LOCALSTORAGE, '1');
+    } else {
+        let suma = parseInt(cantidad) + 1;
+        localStorage.setItem(CLAVE_LOCALSTORAGE, suma);
+    }
+}
+
+//Cada vez que se quita un artículo del carrito
+//se decrementa la cantidad de artículos en el mismo
+//Si el carrito se vacía se quita la clave que indica que hay
+//artículos en el carrito.
+function removeItemFromLocalStorage() {addItemToLocalStorage
+    let cantidad = localStorage.getItem(CLAVE_LOCALSTORAGE);
+    let resta = parseInt(cantidad) - 1;
+    if (resta <= 0) {
+        localStorage.removeItem(CLAVE_LOCALSTORAGE);
+    } else {
+        localStorage.setItem(CLAVE_LOCALSTORAGE, resta);
+    }
+}
+
 // Esta función dejó de utilizar un Map para guardar las compras
 // para pasar a usar el localStorage.
 // Agrega en el localStorage una clave formada por la palabra CoderHouse más el id del artículo
 // el valor para la clave es 1 si es la primera compra y si no le suma uno a la cantidad.
 function addCompra(id) {
-    localStorage.setItem(CLAVE_LOCALSTORAGE, "CoderHouse"); //Esta clave la utilizo para saber que el carrito no está vacío
+    addItemToLocalStorage();
     let idCoderHouse = "CoderHouse" + id; //Solo para "personalizar" el id
     if (localStorage.getItem(idCoderHouse) === null) {
         let compra = new Compra(id, 1); // creo el objeto compra para guardarlo en el localStorage
@@ -346,7 +414,8 @@ function runApp() {
 // Manejo del DOM
 // Programa Principal
 
-const CLAVE_LOCALSTORAGE = "CursoJS_CoderHouse"; //clave para identificar si el carrito está vacío
+let totalForPayPal = 0; //Total del valor de la compra para pasárselo a PayPal
+const CLAVE_LOCALSTORAGE = "CursoJS_Coder"; //clave para identificar si el carrito está vacío
 const contenedorDeProductos = document.getElementById('todosLosProductos'); //div que contendrá todos los productos
 const contenedorTablaCarrito = document.getElementById('tablaCarrito'); //div que contendrá el carrito de compra
 const optsSpin = {
